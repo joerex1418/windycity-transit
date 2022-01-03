@@ -1,0 +1,45 @@
+<script>
+
+
+
+
+
+
+
+
+
+
+
+function refreshNearbyBusStops() {
+        
+        fetch("/tracking/stops?" + new URLSearchParams({
+            lat:'41.9304778',
+            lon:'-87.64109271234568',
+            // lat:document.getElementById('lat_val').textContent,
+            // lon:document.getElementById('lon_val').textContent,
+        }))
+        .then(function(response) {
+            return response.json()
+        }).then(function(data) {
+            console.log(data)
+            document.getElementById("fetched_stop_tracking").textContent = JSON.stringify(data)
+            stp_data = document.getElementById('fetched_stop_tracking')
+            parsed_tracking_data = JSON.parse(stp_data.textContent)
+            bus_blocks = parsed_tracking_data.data.bus.stop_card_html
+            train_block = parsed_tracking_data.data.train.station_card_html
+            block1 = bus_blocks[0]
+            block2 = bus_blocks[1]
+            block3 = train_block
+    
+            busstop1 = document.getElementById("bus-stop1")
+            busstop2 = document.getElementById("bus-stop2")
+            lstation = document.getElementById("lstation")
+    
+            busstop1.innerHTML = block1
+            busstop2.innerHTML = block2
+            lstation.innerHTML = block3
+            // document.getElementById("refresh_bus").addEventListener("click",refreshNearbyStopsTracking)
+        }
+        )
+    }
+</script>
